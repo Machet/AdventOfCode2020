@@ -1,4 +1,5 @@
 ﻿namespace Utils;
+
 public record class MapDirection(string Value)
 {
 	public static readonly MapDirection North = new MapDirection("N");
@@ -25,6 +26,23 @@ public record class MapDirection(string Value)
 		};
 	}
 
+	public MapDirection TurnR(int value)
+	{
+		if (value < 0 || value % 90 != 0)
+		{
+			throw new ArgumentException("Cannot turn degress: " + value);
+		}
+
+		var direction = this;
+		var turns = value / 90;
+		for (int i = 0; i < turns; i++)
+		{
+			direction = direction.Turn90R();
+		}
+
+		return direction;
+	}
+
 	public MapDirection Turn90L()
 	{
 		return Value switch
@@ -35,6 +53,23 @@ public record class MapDirection(string Value)
 			"W" => new MapDirection("S"),
 			_ => throw new Exception()
 		};
+	}
+
+	public MapDirection TurnL(int value)
+	{
+		if (value < 0 || value % 90 != 0)
+		{
+			throw new ArgumentException("Cannot turn degress: " + value);
+		}
+
+		var direction = this;
+		var turns = value / 90;
+		for (int i = 0; i < turns; i++)
+		{
+			direction = direction.Turn90L();
+		}
+
+		return direction;
 	}
 
 	public MapDirection Reverse()

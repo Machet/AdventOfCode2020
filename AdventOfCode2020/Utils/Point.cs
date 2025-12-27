@@ -70,18 +70,18 @@ public record Point(int X, int Y)
 		return visited;
 	}
 
-	public Point GetInDirection(MapDirection direction)
+	public Point GetInDirection(MapDirection direction, int dist = 1)
 	{
 		return direction switch
 		{
-			_ when direction == MapDirection.North => GetNorthOf(),
-			_ when direction == MapDirection.East => GetEastOf(),
-			_ when direction == MapDirection.South => GetSouthOf(),
-			_ when direction == MapDirection.West => GetWestOf(),
-			_ when direction == MapDirection.NorthEast => GetNorthEastOf(),
-			_ when direction == MapDirection.SouthEast => GetSouthEastOf(),
-			_ when direction == MapDirection.SouthWest => GetSouthWestOf(),
-			_ when direction == MapDirection.NorthWest => GetNorthWestOf(),
+			_ when direction == MapDirection.North => GetNorthOf(dist),
+			_ when direction == MapDirection.East => GetEastOf(dist),
+			_ when direction == MapDirection.South => GetSouthOf(dist),
+			_ when direction == MapDirection.West => GetWestOf(dist),
+			_ when direction == MapDirection.NorthEast => GetNorthEastOf(dist),
+			_ when direction == MapDirection.SouthEast => GetSouthEastOf(dist),
+			_ when direction == MapDirection.SouthWest => GetSouthWestOf(dist),
+			_ when direction == MapDirection.NorthWest => GetNorthWestOf(dist),
 			_ => throw new NotImplementedException()
 		};
 	}
@@ -91,6 +91,7 @@ public record Point(int X, int Y)
 		return Math.Abs(X - end.X) + Math.Abs(Y - end.Y);
 	}
 
+	public static Vector operator *(Point a, int value) => new Vector(a.X * value, a.Y * value);
 	public static Vector operator +(Point a, Point b) => new Vector(a.X + b.X, a.Y + b.Y);
 	public static Vector operator -(Point a, Point b) => new Vector(a.X - b.X, a.Y - b.Y);
 	public static Point operator +(Point point, Vector vec) => new Point(point.X + vec.X, point.Y + vec.Y);
